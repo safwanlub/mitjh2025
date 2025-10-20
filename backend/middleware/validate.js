@@ -43,8 +43,28 @@ const validateMapel = [
   handleValidationErrors,
 ];
 
+const validateNilai = [
+  body("tugas")
+    .isInt({ min: 0, max: 100 })
+    .withMessage("Nilai tugas harus angka antara 0-100."),
+  body("uts")
+    .isInt({ min: 0, max: 100 })
+    .withMessage("Nilai UTS harus angka antara 0-100."),
+  body("uas")
+    .isInt({ min: 0, max: 100 })
+    .withMessage("Nilai UAS harus angka antara 0-100."),
+  body("SiswaId")
+    .isInt({ gt: 0 })
+    .withMessage("SiswaId harus angka yang valid."),
+  body("MapelId")
+    .isInt({ gt: 0 })
+    .withMessage("MapelId harus angka yang valid."),
+  handleValidationErrors,
+];
+
 module.exports = {
   validateSiswa,
   validateKelas,
   validateMapel,
+  validateNilai,
 };

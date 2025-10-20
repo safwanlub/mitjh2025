@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: "KelasId", // Foreign key di tabel penghubung yang merujuk ke model lain
         as: "Kelas", // Alias untuk relasi ini
       });
+      // DAN TAMBAHKAN INI:
+      Mapel.hasMany(models.Nilai, { foreignKey: "MapelId", as: "Nilais" });
     }
   }
   Mapel.init(

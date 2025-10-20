@@ -16,12 +16,16 @@ app.use(express.urlencoded({ extended: true }));
 // Import routes
 const siswaRoutes = require("./routes/siswaRoutes");
 const kelasRoutes = require("./routes/kelasRoutes");
-const mapelRoutes = require("./routes/mapelRoutes"); // <--- TAMBAHKAN INI
+const mapelRoutes = require("./routes/mapelRoutes");
+const kelasMapelRoutes = require("./routes/kelasMapelRoutes");
+const nilaiRoutes = require("./routes/nilaiRoutes");
 
 // Gunakan routes
 app.use("/api/siswa", siswaRoutes);
 app.use("/api/kelas", kelasRoutes);
-app.use("/api/mapel", mapelRoutes); // <--- TAMBAHKAN INI
+app.use("/api/mapel", mapelRoutes);
+app.use("/api", kelasMapelRoutes);
+app.use("/api/nilai", nilaiRoutes);
 
 // Simple route
 app.get("/", (req, res) => {
