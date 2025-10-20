@@ -14,18 +14,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Import routes
+const authRoutes = require("./routes/authRoutes");
 const siswaRoutes = require("./routes/siswaRoutes");
 const kelasRoutes = require("./routes/kelasRoutes");
 const mapelRoutes = require("./routes/mapelRoutes");
-const kelasMapelRoutes = require("./routes/kelasMapelRoutes");
 const nilaiRoutes = require("./routes/nilaiRoutes");
+const kelasMapelRoutes = require("./routes/kelasMapelRoutes");
+const { authenticateToken, authorizeRoles } = require("./middleware/auth");
 
 // Gunakan routes
-app.use("/api/siswa", siswaRoutes);
-app.use("/api/kelas", kelasRoutes);
-app.use("/api/mapel", mapelRoutes);
-app.use("/api", kelasMapelRoutes);
-app.use("/api/nilai", nilaiRoutes);
+app.use("/api/auth", authRoutes);
+
+app.use("/api/siswa", authenticateToken, authorizeRoles("admin"), siswaRoutes); // <--- PERHATIKAN INI
+app.use("/api/kelas", authenticateToken, authorizeRoles("admin"), kelasRoutes);
+app.use("/api/mapel", authenticateToken, authorizeRoles("admin"), mapelRoutes);
+app.use(
+  "/api/nilai",
+  authenticateToken,
+  authorizeRoles("admin", "guru"),
+  nilaiRoutes
+);
+app.use("/api", authenticateToken, authorizeRoles("admin"), kelasMapelRoutes);
 
 // Simple route
 app.get("/", (req, res) => {
