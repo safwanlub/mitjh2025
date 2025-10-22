@@ -6,12 +6,10 @@ exports.register = async (req, res) => {
   try {
     const { nama, email, password, role } = req.body;
     const newUser = await User.create({ nama, email, password, role });
-    res
-      .status(201)
-      .json({
-        message: "User berhasil didaftarkan",
-        user: { id: newUser.id, nama: newUser.nama, email: newUser.email },
-      });
+    res.status(201).json({
+      message: "User berhasil didaftarkan",
+      user: { id: newUser.id, nama: newUser.nama, email: newUser.email },
+    });
   } catch (error) {
     res
       .status(500)
@@ -40,6 +38,7 @@ exports.login = async (req, res) => {
     const payload = {
       id: user.id,
       email: user.email,
+      nama: user.nama,
       role: user.role,
     };
 
